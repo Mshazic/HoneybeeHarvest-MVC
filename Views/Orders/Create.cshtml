@@ -1,0 +1,28 @@
+@model OrderCreateViewModel
+@{
+    ViewData["Title"] = "Order Honey";
+}
+
+<section class="page-shell section-space narrow-shell">
+    <p class="eyebrow">MVC order form</p>
+    <h1>Order honey</h1>
+    <p>Submit a fictional order to preview the posted values.</p>
+
+    <form asp-action="Create" method="post" class="order-form">
+        <div asp-validation-summary="ModelOnly" class="validation-message"></div>
+
+        <div class="field-group">
+            <label asp-for="Input.CustomerName">Name</label>
+            <input asp-for="Input.CustomerName" />
+            <span asp-validation-for="Input.CustomerName" class="validation-message"></span>
+        </div>
+
+        <div class="field-group">
+            <label asp-for="Input.Email">Email</label>
+            <input asp-for="Input.Email" />
+            <span asp-validation-for="Input.Email" class="validation-message"></span>
+        </div>
+
+        <button class="button" type="submit">Save order</button>
+    </form>
+</section>
