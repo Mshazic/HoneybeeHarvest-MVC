@@ -1,5 +1,3 @@
-using HoneybeeHarvest.Models;
-using Microsoft.AspNetCore.Mvc;
 using HoneybeeHarvest.Data;
 using HoneybeeHarvest.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,26 +5,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HoneybeeHarvest.Controllers;
 
-public sealed class OrdersController : Controller
+public sealed class OrdersController(HoneybeeContext context) : Controller
 {
-    private readonly HoneybeeContext _context;
+    private readonly HoneybeeContext _context = context;
 
-    public OrdersController(HoneybeeContext context)
+    [HttpGet]
+    public IActionResult Create(string? product)
     {
-        _context = context;
+        return View(new OrderCreateViewModel
+        {
+            Input = new OrderInputModel
+            {
+                ProductName = product ?? string.Empty
+            },
+            Products = Catalog.Products
+        });
     }
 
-       [HttpGet]
-    public async Task<IActionResult> Index()
-    {
-        var orders = await _context.Orders
-            .OrderByDescending(order => order.CreatedAtUtc)
-            .ToListAsync();
-
-        return View(orders);
-    }
-
-        [HttpPost]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(OrderCreateViewModel model)
     {
@@ -50,5 +46,15 @@ public sealed class OrdersController : Controller
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var orders = await _context.Orders
+            .OrderByDescending(order => order.CreatedAtUtc)
+            .ToListAsync();
+
+        return View(orders);
     }
 }

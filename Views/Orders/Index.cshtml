@@ -1,0 +1,45 @@
+@model IReadOnlyList<Order>
+@{
+    ViewData["Title"] = "Saved Orders";
+}
+
+<section class="page-shell section-space">
+    <p class="eyebrow">SQLite order history</p>
+    <h1>Saved orders</h1>
+
+    @if (Model.Count == 0)
+    {
+        <div class="empty-state">
+            <p>No orders have been saved yet.</p>
+            <a class="button" asp-action="Create">Create the first order</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-shell">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Honey</th>
+                        <th>Quantity</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.CustomerName</td>
+                            <td>@order.Email</td>
+                            <td>@order.ProductName</td>
+                            <td>@order.Quantity</td>
+                            <td>@order.CreatedAtUtc.ToLocalTime()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>
