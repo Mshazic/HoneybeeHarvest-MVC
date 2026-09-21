@@ -1,33 +1,54 @@
 using HoneybeeHarvest.Models;
 using Microsoft.AspNetCore.Mvc;
+using HoneybeeHarvest.Data;
+using HoneybeeHarvest.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HoneybeeHarvest.Controllers;
 
 public sealed class OrdersController : Controller
 {
-    [HttpGet]
-    public IActionResult Create(string? product)
+    private readonly HoneybeeContext _context;
+
+    public OrdersController(HoneybeeContext context)
     {
-        return View(new OrderCreateViewModel
-        {
-            Input = new OrderInputModel
-            {
-                ProductName = product ?? string.Empty
-            },
-            Products = Catalog.Products
-        });
+        _context = context;
     }
 
-    [HttpPost]
+       [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        var orders = await _context.Orders
+            .OrderByDescending(order => order.CreatedAtUtc)
+            .ToListAsync();
+
+        return View(orders);
+    }
+
+        [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(OrderCreateViewModel model)
-    {   if (!ModelState.IsValid)
+    public async Task<IActionResult> Create(OrderCreateViewModel model)
+    {
+        model.Products = Catalog.Products;
+
+        if (!ModelState.IsValid)
         {
-            model.Products = Catalog.Products;
             return View(model);
         }
-        model.Products = Catalog.Products;
-        ViewData["Submitted"] = true;
-        return View(model);
+
+        var order = new Order
+        {
+            CustomerName = model.Input.CustomerName,
+            Email = model.Input.Email,
+            ProductName = model.Input.ProductName,
+            Quantity = model.Input.Quantity,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+
+        _context.Orders.Add(order);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
 }
