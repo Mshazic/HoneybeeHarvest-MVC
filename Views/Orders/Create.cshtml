@@ -23,6 +23,35 @@
             <span asp-validation-for="Input.Email" class="validation-message"></span>
         </div>
 
+        <div class="field-group">
+            <label asp-for="Input.ProductName">Honey</label>
+            <select asp-for="Input.ProductName">
+                <option value="">Choose a product</option>
+                @foreach (var product in Model.Products)
+                {
+                    <option value="@product.Name">@product.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Input.ProductName" class="validation-message"></span>
+        </div>
+
+        <div class="field-group">
+            <label asp-for="Input.Quantity">Quantity</label>
+            <input asp-for="Input.Quantity" min="1" max="12" />
+            <span asp-validation-for="Input.Quantity" class="validation-message"></span>
+        </div>
+
         <button class="button" type="submit">Save order</button>
     </form>
+
+    @if (ViewData["Submitted"] is true)
+    {
+        <div class="empty-state">
+            <h2>Submitted order preview</h2>
+            <p><strong>Name:</strong> @Model.Input.CustomerName</p>
+            <p><strong>Email:</strong> @Model.Input.Email</p>
+            <p><strong>Honey:</strong> @Model.Input.ProductName</p>
+            <p><strong>Quantity:</strong> @Model.Input.Quantity</p>
+        </div>
+    }
 </section>
