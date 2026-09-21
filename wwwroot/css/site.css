@@ -154,3 +154,23 @@ h1 {
   text-decoration: none;
   cursor: pointer;
 }
+.button:hover,
+.button:focus {
+  color: var(--white);
+  background: var(--brown);
+  box-shadow: none;
+}
+
+.order-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.field-group {
+  display: grid;
+  gap: 0.35rem;
+}
+
+label {
+  font-weight: 800;
+}
