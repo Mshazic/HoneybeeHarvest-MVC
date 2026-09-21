@@ -21,7 +21,11 @@ public sealed class OrdersController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(OrderCreateViewModel model)
-    {
+    {   if (!ModelState.IsValid)
+        {
+            model.Products = Catalog.Products;
+            return View(model);
+        }
         model.Products = Catalog.Products;
         ViewData["Submitted"] = true;
         return View(model);

@@ -1,8 +1,29 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Product[]
+@{
+    ViewData["Title"] = "Honey Catalog";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero">
+    <div class="page-shell">
+        <p class="eyebrow">Server-rendered honey shop</p>
+        <h1>Choose your honey</h1>
+        <p>This catalog is rendered from C# product data through an MVC controller and Razor view.</p>
+    </div>
+</section>
+
+<section class="page-shell section-space">
+    <div class="product-grid">
+        @foreach (var product in Model)
+        {
+            <article class="product-card">
+                <div class="jar-art" aria-hidden="true"></div>
+                <h2>@product.Name</h2>
+                <p>@product.Description</p>
+                <p class="price">$@product.Price</p>
+                <a class="button" asp-controller="Orders" asp-action="Create" asp-route-product="@product.Name">
+                    Order this honey
+                </a>
+            </article>
+        }
+    </div>
+</section>
