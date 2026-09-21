@@ -87,3 +87,24 @@ h1 {
     radial-gradient(circle at top right, #ffe399 0, transparent 36%),
     var(--soft-gold);
 }
+.section-space {
+  padding-block: 4rem;
+}
+
+.narrow-shell {
+  max-width: 720px;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.product-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
