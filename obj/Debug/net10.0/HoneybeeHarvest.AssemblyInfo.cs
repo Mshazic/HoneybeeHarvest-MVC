@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HoneybeeHarvest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d82a927cb9642b812bcae5aa8787afb861fbcee8")]
 [assembly: System.Reflection.AssemblyProductAttribute("HoneybeeHarvest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HoneybeeHarvest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
